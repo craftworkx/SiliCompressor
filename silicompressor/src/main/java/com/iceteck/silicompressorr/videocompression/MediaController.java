@@ -280,7 +280,7 @@ public void scheduleVideoConvert(String path, File dest) {
         int resultWidth = outWidth > 0 ? outWidth : DEFAULT_VIDEO_WIDTH;
         int resultHeight = outHeight > 0 ? outHeight : DEFAULT_VIDEO_HEIGHT;
 
-        int rotationValue = Integer.valueOf(rotation);
+        int rotationValue = 0;
         int originalWidth = Integer.valueOf(width);
         int originalHeight = Integer.valueOf(height);
 
@@ -290,31 +290,6 @@ public void scheduleVideoConvert(String path, File dest) {
         File cacheFile = new File(destDir,
                 "VIDEO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()) + ".mp4"
         );
-
-        if (Build.VERSION.SDK_INT < 18 && resultHeight > resultWidth && resultWidth != originalWidth && resultHeight != originalHeight) {
-            int temp = resultHeight;
-            resultHeight = resultWidth;
-            resultWidth = temp;
-            rotationValue = 90;
-            rotateRender = 270;
-        } else if (Build.VERSION.SDK_INT > 20) {
-            if (rotationValue == 90) {
-                int temp = resultHeight;
-                resultHeight = resultWidth;
-                resultWidth = temp;
-                rotationValue = 0;
-                rotateRender = 270;
-            } else if (rotationValue == 180) {
-                rotateRender = 180;
-                rotationValue = 0;
-            } else if (rotationValue == 270) {
-                int temp = resultHeight;
-                resultHeight = resultWidth;
-                resultWidth = temp;
-                rotationValue = 0;
-                rotateRender = 90;
-            }
-        }
 
 
         File inputFile = new File(path);
